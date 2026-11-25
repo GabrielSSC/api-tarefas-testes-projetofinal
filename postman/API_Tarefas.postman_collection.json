@@ -1,0 +1,262 @@
+{
+  "info": {
+    "name": "API de Tarefas - Projeto Final",
+    "description": "API simples Java 17/Spring Boot/H2, na porta 8095. Entrada: TarefaRequest. Saida: TarefaResponse. Erros JSON: codigo, mensagem, timestamp e path.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Listar tarefas",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas"
+          ]
+        },
+        "method": "GET",
+        "description": "Lista todas as tarefas. Pode retornar [] no começo.",
+        "header": []
+      }
+    },
+    {
+      "name": "2. Cadastrar tarefa",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas"
+          ]
+        },
+        "method": "POST",
+        "description": "Crie uma tarefa; observe o ID retornado e atualize a variavel tarefaId se necessario.",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Estudar JUnit\",\n  \"descricao\": \"Resolver exercicios da aula\",\n  \"concluida\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "3. Buscar tarefa por ID",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas/{{tarefaId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas",
+            "{{tarefaId}}"
+          ]
+        },
+        "method": "GET",
+        "description": "Consulta uma tarefa. Execute o cadastro antes.",
+        "header": []
+      }
+    },
+    {
+      "name": "4. Atualizar tarefa",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas/{{tarefaId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas",
+            "{{tarefaId}}"
+          ]
+        },
+        "method": "PUT",
+        "description": "Atualiza a tarefa com ID indicado na variavel tarefaId.",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Estudar Mockito\",\n  \"descricao\": \"Treinar testes unitarios\",\n  \"concluida\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "5. Excluir tarefa",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas/{{tarefaId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas",
+            "{{tarefaId}}"
+          ]
+        },
+        "method": "DELETE",
+        "description": "Exclui a tarefa. Esperado HTTP 204.",
+        "header": []
+      }
+    },
+    {
+      "name": "6. Buscar ID inexistente (404)",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas/999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas",
+            "999999"
+          ]
+        },
+        "method": "GET",
+        "description": "HTTP 404 com ErroResponse JSON (codigo TAREFA_NAO_ENCONTRADA).",
+        "header": []
+      }
+    },
+    {
+      "name": "7. Cadastro sem titulo (400)",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas"
+          ]
+        },
+        "method": "POST",
+        "description": "HTTP 400 com ErroResponse JSON (codigo DADOS_INVALIDOS).",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": null,\n  \"descricao\": \"Sem titulo\",\n  \"concluida\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "8. Cadastro sem descricao (400)",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas"
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "description": "HTTP 400: DADOS_INVALIDOS.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Tarefa sem descricao\",\n  \"descricao\": null,\n  \"concluida\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "9. JSON invalido (400)",
+      "request": {
+        "url": {
+          "raw": "{{baseUrl}}/api/tarefas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tarefas"
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "description": "HTTP 400: JSON_INVALIDO.",
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"titulo\": \"Erro\",",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8095",
+      "type": "string"
+    },
+    {
+      "key": "tarefaId",
+      "value": "1",
+      "type": "string"
+    }
+  ]
+}
